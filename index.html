@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css/style.css"></link>
+    </head>
+
+    <body>
+        <a href="http://github.com/edsu/hathitime"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"
+        <header>hathi-time</header>
+
+        <section id="summary">
+        </section>
+
+        <section id="search">
+            <input size="16" name="q" type="text">
+            <input type="submit" value="search"></input>
+        </section>
+
+        <section id="search-results">
+            <table id="results"></table>
+        </section>
+
+        <!-- javascript -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+        <script src="js/mustache.js"></script>
+        <script src="js/hathitime.js"></script>
+        <script>
+          $(document).ready(init);
+        </script>
+
+        <!-- templates -->
+        <script id="result-template" type="text/x-mustache-template">
+            <tr><td>{{ year }}</td><td class="count">{{ count }}</td></tr>
+        </script>
+    </body>
+</html>
