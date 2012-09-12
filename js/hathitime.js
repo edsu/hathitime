@@ -26,6 +26,7 @@ function drawGraph(response) {
   // the word/phrase that was searched for
   var q = $('input[name="q"]').val();
 
+  /*
   // add the percentage graph
   var id = "percents-" + $(".graph").length + 1;
   var div = $("#graphs").prepend('<div title="' + q + '" id="' + id + '" class="graph"></div>');
@@ -38,6 +39,7 @@ function drawGraph(response) {
     title: 'Percentage of books by year that mention "' + q + '"'
   };
   var g = new Dygraph(graph, percents, opts);
+  */
 
   // add the counts graph
   var id = "counts-" + $(".graph").length + 1;
