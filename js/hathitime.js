@@ -33,7 +33,7 @@ function drawGraph(response) {
   var opts = {
     width: 800, 
     height: 300,
-    valueRange: [0, 100],
+    valueRange: [0, 101],
     pointClickCallback: searchCatalog,
     title: 'Percentage of books by year that mention "' + q + '"'
   };
@@ -46,9 +46,8 @@ function drawGraph(response) {
   var opts = {
     width: 800, 
     height: 300,
-    valueRange: [0, 100],
     pointClickCallback: searchCatalog,
-    title = 'Number of books that mention "' + q + '"'
+    title: 'Number of books that mention "' + q + '"'
   };
   var g = new Dygraph(graph, counts, opts);
 }
