@@ -12,9 +12,11 @@ function search() {
 
 function printResults(response) {
   var template = $("#result-template").html();
-  for (var i=0; i < response.facet_counts.facet_fields.publishDate.length; i=i+2) {
-    var year = response.facet_counts.facet_fields.publishDate[i];
-    var count = response.facet_counts.facet_fields.publishDate[i+1];
+  var result = response.facet_counts.facet_fields.publishDate;
+  for (var i=0; i < result.length; i=i+2) {
+    var year = result[i];
+    var count = result[i+1];
+    if (year > 2012 || year <= 1000) continue;
     $("#results").append(Mustache.render(template, {
       year: year,
       count: count
