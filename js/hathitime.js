@@ -5,7 +5,7 @@ function init() {
 function search() {
   $("#results").empty();
   var q = encodeURIComponent($('input[name="q"]').val());
-  var url = "http://chinkapin.pti.indiana.edu:9994/solr/select/?qt=sharding&facet=true&facet.field=publishDate&wt=json&facet.sort=index&facet.limit=2000&q=ocr:" + q;
+  var url = "http://chinkapin.pti.indiana.edu:9994/solr/select/?qt=sharding&facet=true&facet.field=publishDate&wt=json&facet.sort=index&facet.limit=2000&q=+ocr:%22" + q + "%22";
   $.ajax({url: url, dataType: "jsonp", success: drawGraph, jsonp: "json.wrf"});
 }
 
@@ -26,7 +26,6 @@ function drawGraph(response) {
   // the word/phrase that was searched for
   var q = $('input[name="q"]').val();
 
-  /*
   // add the percentage graph
   var id = "percents-" + $(".graph").length + 1;
   var div = $("#graphs").prepend('<div title="' + q + '" id="' + id + '" class="graph"></div>');
@@ -36,10 +35,9 @@ function drawGraph(response) {
     height: 300,
     valueRange: [0, 101],
     pointClickCallback: searchCatalog,
-    title: 'Percentage of books by year that mention "' + q + '"'
+    title: 'Percentage of books that mention <em>' + q + '</em>'
   };
   var g = new Dygraph(graph, percents, opts);
-  */
 
   // add the counts graph
   var id = "counts-" + $(".graph").length + 1;
@@ -49,7 +47,7 @@ function drawGraph(response) {
     width: 800, 
     height: 300,
     pointClickCallback: searchCatalog,
-    title: 'Number of books that mention "' + q + '"'
+    title: 'Number of books that mention <em>' + q + '</em>'
   };
   var g = new Dygraph(graph, counts, opts);
 }
@@ -57,6 +55,6 @@ function drawGraph(response) {
 function searchCatalog(e, point) {
   var year = point.xval;
   var q = $(e.currentTarget).parent().parent().attr("title");
-  var url = "http://babel.hathitrust.org/cgi/ls?a=srchls&anyall1=all&field1=ocr&op3=AND&yop=in&q1=" + q + "&pdate=" + year;
+  var url = "http://babel.hathitrust.org/cgi/ls?a=srchls&anyall1=phrase&q1=" + q + "&field1=ocr&op3=AND&yop=in&pdate=" + year;
   window.open(url, "_blank");
 }
