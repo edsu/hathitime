@@ -11,30 +11,46 @@ function search() {
 
 function drawGraph(response) {
   // collect data from the solr response
-  var data = [];
+  var counts = [];
+  var percents = [];
   var result = response.facet_counts.facet_fields.publishDate;
   for (var i=0; i < result.length; i=i+2) {
     var year = result[i];
     var count = result[i+1];
     if (year > 2012 || year <= 1600) continue;
-    data.push([parseInt(year), parseInt(count)]);
+    var percent = parseInt(count / allCounts[year] * 100);
+    counts.push([parseInt(year), parseInt(count)]);
+    percents.push([parseInt(year), percent]);
   }
 
-  // draw the graph, but jump through a few hoops to allow old
-  // graphs to be pushed down
+  // the word/phrase that was searched for
   var q = $('input[name="q"]').val();
+
+  // add the percentage graph
+  var id = "percents-" + $(".graph").length + 1;
+  var div = $("#graphs").prepend('<div title="' + q + '" id="' + id + '" class="graph"></div>');
+  var graph = document.getElementById(id);
   var opts = {
-    title: '"' + $('input[name="q"]').val() + '"',
     width: 800, 
     height: 300,
-    pointClickCallback: searchCatalog
+    valueRange: [0, 100],
+    pointClickCallback: searchCatalog,
+    title: 'Percentage of books by year that mention "' + q + '"'
   };
+  var g = new Dygraph(graph, percents, opts);
 
-  var id = "graph-" + $(".graph").length + 1;
+  // add the counts graph
+  var id = "counts-" + $(".graph").length + 1;
   var div = $("#graphs").prepend('<div title="' + q + '" id="' + id + '" class="graph"></div>');
-
   var graph = document.getElementById(id);
-  var g = new Dygraph(graph, data, opts);
+  var opts = {
+    width: 800, 
+    height: 300,
+    valueRange: [0, 100],
+    pointClickCallback: searchCatalog,
+    title = 'Number of books that mention "' + q + '"'
+  };
+  var g = new Dygraph(graph, counts, opts);
 }
 
 function searchCatalog(e, point) {
