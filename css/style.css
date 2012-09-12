@@ -1,6 +1,6 @@
 body {
   font-size: 14pt;
-  width: 400px;
+  width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -19,6 +19,9 @@ header img {
   font-size: 10pt;
   padding: 5px;
   font-style: italic;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #search {
@@ -27,29 +30,14 @@ header img {
   margin-bottom: 20px;
 }
 
-#results {
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 14pt;
-}
-
-#results td {
-  border-bottom: thin solid #dddddd;
-}
-
-#results th {
-  padding: 0px 10px 0px 10px;
-}
-
-#results .count {
-  text-align: right;
-}
-
-
 #search input {
   height: 40px;
   font-size: 14pt;
   padding-left: 10px;
+}
+
+.graph {
+  margin-bottom: 30px;
 }
 
 @media only screen and (max-device-width: 480px) {
