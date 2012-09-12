@@ -9,21 +9,6 @@ function search() {
   $.ajax({url: url, dataType: "jsonp", success: drawGraph, jsonp: "json.wrf"});
 }
 
-function printResults(response) {
-  var template = $("#result-template").html();
-  var result = response.facet_counts.facet_fields.publishDate;
-  for (var i=0; i < result.length; i=i+2) {
-    var year = result[i];
-    var count = result[i+1];
-    if (year > 2012 || year <= 1600) continue;
-    $("#results").append(Mustache.render(template, {
-      year: year,
-      count: count
-    }));
-  }
-  drawGraph();
-}
-
 function drawGraph(response) {
   // collect data from the solr response
   var data = [];
@@ -41,11 +26,20 @@ function drawGraph(response) {
   var opts = {
     title: '"' + $('input[name="q"]').val() + '"',
     width: 800, 
-    height: 300
+    height: 300,
+    pointClickCallback: searchCatalog
   };
 
   var id = "graph-" + $(".graph").length + 1;
-  $("#graphs").prepend('<div id="' + id + '" class="graph"></div>');
+  var div = $("#graphs").prepend('<div title="' + q + '" id="' + id + '" class="graph"></div>');
+
   var graph = document.getElementById(id);
   var g = new Dygraph(graph, data, opts);
+}
+
+function searchCatalog(e, point) {
+  var year = point.xval;
+  var q = $(e.currentTarget).parent().parent().attr("title");
+  var url = "http://babel.hathitrust.org/cgi/ls?a=srchls&anyall1=all&field1=ocr&op3=AND&yop=in&q1=" + q + "&pdate=" + year;
+  window.open(url, "_blank");
 }
