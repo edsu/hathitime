@@ -15,10 +15,9 @@ url = 'http://chinkapin.pti.indiana.edu:9994/solr/select/?qt=sharding&wt=json&q=
 
 for year in range(1600, 2013):
     r = requests.get(url % year, headers={"user-agent": "hathitime: https://github.com/edsu/hathitime"})
-    counts[str(year)] = r.json["response"]["numFound"]
+    j = json.loads(r.content)
+    counts[str(year)] = j["response"]["numFound"]
     print year
-    if year > 1610:
-        break
     time.sleep(1)
 
 open("js/all.js", "w").write("allCounts = " + json.dumps(counts, indent=2) + ";")
