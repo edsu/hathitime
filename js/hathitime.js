@@ -1,7 +1,7 @@
 function init() {
   $('input[type="submit"]').click(search);
   if (location.hash) {
-  	var q = location.hash.slice(1);
+    var q = location.hash.slice(1);
     $('input[name="q"]').val(q);
     search();
   }
@@ -20,9 +20,9 @@ function drawGraph(response) {
   var counts = [];
   var percents = [];
   var result = response.facet_counts.facet_fields.publishDate;
-  for (var i=0; i < result.length; i=i+2) {
+  for (var i = 0; i < result.length; i = i + 2) {
     var year = result[i];
-    var count = result[i+1];
+    var count = result[i + 1];
     if (year > 2012 || year <= 1600) continue;
     var percent = parseInt(count / allCounts[year] * 100);
     counts.push([parseInt(year), parseInt(count)]);
