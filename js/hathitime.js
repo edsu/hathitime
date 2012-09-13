@@ -1,5 +1,10 @@
 function init() {
   $('input[type="submit"]').click(search);
+  if (location.hash) {
+  	var q = location.hash.slice(1);
+    $('input[name="q"]').val(q);
+    search();
+  }
 }
 
 function search() {
@@ -7,6 +12,7 @@ function search() {
   var q = encodeURIComponent($('input[name="q"]').val());
   var url = "http://chinkapin.pti.indiana.edu:9994/solr/select/?qt=sharding&facet=true&facet.field=publishDate&wt=json&facet.sort=index&facet.limit=2000&q=+ocr:%22" + q + "%22";
   $.ajax({url: url, dataType: "jsonp", success: drawGraph, jsonp: "json.wrf"});
+  location.hash = "#" + q;
 }
 
 function drawGraph(response) {
