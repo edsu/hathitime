@@ -11,7 +11,7 @@ import json
 import requests
 
 counts = {}
-url = 'http://chinkapin.pti.indiana.edu:9994/solr/select/?qt=sharding&wt=json&q=publishDate:%s'
+url = 'http://chinkapin.pti.indiana.edu:9994/solr/meta/select/?qt=sharding&wt=json&q=publishDate:%s'
 
 for year in range(1600, 2013):
     r = requests.get(url % year, headers={"user-agent": "hathitime: https://github.com/edsu/hathitime"})
