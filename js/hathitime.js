@@ -10,7 +10,7 @@ function init() {
 function search() {
   $("#results").empty();
   var q = encodeURIComponent($('input[name="q"]').val());
-  var url = "http://chinkapin.pti.indiana.edu:9994/solr/ocr/select/?qt=sharding&facet=true&facet.field=publishDate&wt=json&facet.sort=index&facet.limit=2000&q=+ocr:%22" + q + "%22";
+  var url = "http://chinkapin.pti.indiana.edu:9994/solr/meta/ocr/select/?qt=sharding&facet=true&facet.field=publishDate&wt=json&facet.sort=index&facet.limit=2000&q=+ocr:%22" + q + "%22";
   $.ajax({url: url, dataType: "jsonp", success: drawGraph, jsonp: "json.wrf"});
   location.hash = "#" + q;
 }
