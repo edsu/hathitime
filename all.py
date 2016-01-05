@@ -13,7 +13,7 @@ import requests
 counts = {}
 url = 'http://chinkapin.pti.indiana.edu:9994/solr/meta/select/?qt=sharding&wt=json&q=publishDate:%s'
 
-for year in range(1600, 2013):
+for year in range(1600, 2016):
     r = requests.get(url % year, headers={"user-agent": "hathitime: https://github.com/edsu/hathitime"})
     j = json.loads(r.content)
     counts[str(year)] = j["response"]["numFound"]
